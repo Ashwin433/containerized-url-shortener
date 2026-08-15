@@ -15,10 +15,19 @@ def test_home():
     assert response.status_code == 200
 
 
-def test_health_endpoint():
+def test_shorten():
     app = create_app()
     client = app.test_client()
 
-    response = client.get("/health")
+    response = client.post(
+        "/shorten",
+        json={"url": "https://github.com"},
+    )
 
-    assert response.status_code in [200, 503]
+    assert response.status_code == 201
+
+    data = response.get_json()
+
+    assert data["original_url"] == "https://github.com"
+    assert "code" in data
+    assert "short_url" in data
