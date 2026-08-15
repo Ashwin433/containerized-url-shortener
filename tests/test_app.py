@@ -9,9 +9,7 @@ from app.main import create_app
 
 
 def create_test_app(monkeypatch):
-    fake_redis = fakeredis.FakeRedis(
-        decode_responses=True
-    )
+    fake_redis = fakeredis.FakeRedis(decode_responses=True)
 
     monkeypatch.setattr(
         "app.main.redis.from_url",
